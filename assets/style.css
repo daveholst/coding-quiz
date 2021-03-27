@@ -15,4 +15,5 @@ body {
 
 /* answer-buttons */
 custom-button {
+  display: block;
 }
