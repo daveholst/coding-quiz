@@ -47,11 +47,13 @@ class Timer {
 
 }
 
-class Score {
+class Quiz {
   constructor(questions) {
     this.questions = questions;
     this.scoreID = Math.floor(Math.random() * 100000000);
     this.userInputs = [];
+    this.currentQuestion = 0;
+    this.lastQuestion = questions.length - 1;
   }
 
   get answersIndex() {
@@ -62,54 +64,99 @@ class Score {
     });
     return answersArray;
   }
+
+  generateQuestion(questionNum = this.currentQuestion) {
+    const { userInputs } = this;
+    const { id, question, answers, correctIndex } = this.questions[questionNum];
+    //create question
+    let questionNumElement = document.createElement('h3')
+    let questionElement = document.createElement('h4');
+    questionNumElement.innerText = `Question ${id + 1}`;
+    questionElement.innerText = question;
+    mainBox.appendChild(questionNumElement);
+    mainBox.appendChild(questionElement);
+    //create answer list
+
+    for (let i = 0; i < answers.length; i++) {
+      const answer = answers[i];
+      let newButton = document.createElement('button');
+      newButton.classList.add("custom-button");
+      newButton.setAttribute('id', `button ${i}`);
+      newButton.innerText = answer;
+      mainBox.appendChild(newButton);
+    }
+
+    //add listener
+
+    mainBox.addEventListener('click', (event) => {
+      let buttonIndex = parseInt(event.target.id.slice(-1));
+      console.log(buttonIndex);
+      this.userInputs.push(buttonIndex);
+      console.log(this.userInputs);
+      if (this.currentQuestion === this.lastQuestion) {
+        this.currentQuestion++;
+        mainBox.innerHTML = '';
+        this.generateQuestion(this.currentQuestion)
+      } else {
+        //goto scores page? gen of method
+      }
+
+    }, { once: true });
+
+
+  }
+
+  cleanQuiz() {
+    mainBox.innerHTML = '';
+  }
+
 }
 
 
 // function to generate question page
-function questionPageGenerator(questionInput, score) {
-  // deconstruct variable for ease of reading
-  const { id, question, answers, correctIndex } = questionInput;
-  //create question
-  let questionNumElement = document.createElement('h3')
-  let questionElement = document.createElement('h4');
-  questionNumElement.innerText = `Question ${id + 1}`;
-  questionElement.innerText = question;
-  mainBox.appendChild(questionNumElement);
-  mainBox.appendChild(questionElement);
-  //create answer list
+// function questionPageGenerator(questionInput, score) {
+//   // deconstruct variable for ease of reading
+//   // const currentQuestion = 0;
+//   const { userInputs } = score;
+//   const { id, question, answers, correctIndex } = questionInput;
+//   //create question
+//   let questionNumElement = document.createElement('h3')
+//   let questionElement = document.createElement('h4');
+//   questionNumElement.innerText = `Question ${id + 1}`;
+//   questionElement.innerText = question;
+//   mainBox.appendChild(questionNumElement);
+//   mainBox.appendChild(questionElement);
+//   //create answer list
 
-  for (let i = 0; i < answers.length; i++) {
-    const answer = answers[i];
-    newButton = document.createElement('button');
-    newButton.classList.add("custom-button");
-    newButton.setAttribute('id', `button ${i}`)
-    newButton.innerText = answer;
-    mainBox.appendChild(newButton);
-  }
-  // listen for click
-  mainBox.addEventListener('click',(event) => {
-    buttonIndex = parseInt(event.target.id.slice(-1));
-    score.userInputs.push(buttonIndex);
-    // console.log(score.userInputs);
-  })
+//   for (let i = 0; i < answers.length; i++) {
+//     const answer = answers[i];
+//     newButton = document.createElement('button');
+//     newButton.classList.add("custom-button");
+//     newButton.setAttribute('id', `button ${i}`);
+//     newButton.innerText = answer;
+//     mainBox.appendChild(newButton);
+//   }
 
 
 
 
-}
+// }
+
+
 
 function startQuiz() {
   //create timer
   const timer1 = new Timer(300, timer);
-  const score1 = new Score(questions);
+  const quiz1 = new Quiz(questions);
   // const timer1 = new Timer;
   timer1.startTimer();
+  quiz1.generateQuestion();
   // clear out highscore div
 
   // remove start-button
 
   // test generator
-  questionPageGenerator(questions[0],score1)
+
 
 }
 
@@ -119,4 +166,9 @@ function startQuiz() {
 // questionPageGenerator(questions[0]);
 
 // Button Click event Listener
-startButton.addEventListener('click', startQuiz)
+startButton.addEventListener('click', () => {
+  startButton.remove();
+  startQuiz();
+})
+
+//Mainbox event listener
