@@ -14,7 +14,7 @@ const questions = [
   },
   {
     id: 1,
-    question: 'Function and var are known as: ',
+    question: 'SECOND QUESTION: ',
     answers: ['Keywords','Data types','Declaration Statements','Prototypes'],
     correctIndex: 2
   }
@@ -76,7 +76,6 @@ class Quiz {
     mainBox.appendChild(questionNumElement);
     mainBox.appendChild(questionElement);
     //create answer list
-
     for (let i = 0; i < answers.length; i++) {
       const answer = answers[i];
       let newButton = document.createElement('button');
@@ -87,67 +86,50 @@ class Quiz {
     }
 
     //add listener
-
     mainBox.addEventListener('click', (event) => {
       let buttonIndex = parseInt(event.target.id.slice(-1));
       console.log(buttonIndex);
-      this.userInputs.push(buttonIndex);
-      console.log(this.userInputs);
-      if (this.currentQuestion === this.lastQuestion) {
+      userInputs.push(buttonIndex);
+      // check if incorrect
+      if (!this.isCorrect(id, buttonIndex)) {
+        timer1.currentVal -= 30;
+      }
+      console.log(this.isCorrect(id, buttonIndex));
+      if (this.currentQuestion < this.lastQuestion) {
         this.currentQuestion++;
         mainBox.innerHTML = '';
-        this.generateQuestion(this.currentQuestion)
+        this.generateQuestion(this.currentQuestion);
       } else {
         //goto scores page? gen of method
       }
-
     }, { once: true });
+  }
 
+  // is answer correct checker method
+  isCorrect(questionIndex, inputIndex) {
+
+    if (this.answersIndex[questionIndex] === inputIndex) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  generateResults() {
 
   }
 
-  cleanQuiz() {
-    mainBox.innerHTML = '';
-  }
 
 }
 
 
-// function to generate question page
-// function questionPageGenerator(questionInput, score) {
-//   // deconstruct variable for ease of reading
-//   // const currentQuestion = 0;
-//   const { userInputs } = score;
-//   const { id, question, answers, correctIndex } = questionInput;
-//   //create question
-//   let questionNumElement = document.createElement('h3')
-//   let questionElement = document.createElement('h4');
-//   questionNumElement.innerText = `Question ${id + 1}`;
-//   questionElement.innerText = question;
-//   mainBox.appendChild(questionNumElement);
-//   mainBox.appendChild(questionElement);
-//   //create answer list
-
-//   for (let i = 0; i < answers.length; i++) {
-//     const answer = answers[i];
-//     newButton = document.createElement('button');
-//     newButton.classList.add("custom-button");
-//     newButton.setAttribute('id', `button ${i}`);
-//     newButton.innerText = answer;
-//     mainBox.appendChild(newButton);
-//   }
 
 
-
-
-// }
-
-
+const timer1 = new Timer(300, timer);
+const quiz1 = new Quiz(questions);
 
 function startQuiz() {
   //create timer
-  const timer1 = new Timer(300, timer);
-  const quiz1 = new Quiz(questions);
   // const timer1 = new Timer;
   timer1.startTimer();
   quiz1.generateQuestion();
