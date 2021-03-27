@@ -1,0 +1,7 @@
+- [] build high scores page / start page
+- [] link to localStorage (object mirroring?)
+- [x] test questions
+- [] final questions
+- [] question element builder function
+- [] load next question when an answer is selected (or when next is pushed?)
+- [] results page at end - also allow initial entry to save high score. make this a class constructor?

@@ -4,11 +4,15 @@ body {
   text-align: center;
 }
 
-#score-box {
+#main-box {
   height: 70vmin;
 }
 
 #start-button {
   width: 60vmin;
   height: 50px;
+}
+
+/* answer-buttons */
+custom-button {
 }
