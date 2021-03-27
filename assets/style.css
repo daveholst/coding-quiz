@@ -1,0 +1,14 @@
+body {
+  /* TODO: Get better fonts!!! */
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+#score-box {
+  height: 70vmin;
+}
+
+#start-button {
+  width: 60vmin;
+  height: 50px;
+}
