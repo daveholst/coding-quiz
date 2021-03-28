@@ -249,11 +249,14 @@ class Quiz {
   buildHighScores() {
     const scores = this.resultsFromLocal();
     let highScoreElement = document.createElement('div');
-    highScoreElement.setAttribute('id', 'high-scores');
+    highScoreElement.setAttribute('id', 'high-scores-container');
     scores.forEach(score => {;
       let scoreElement = document.createElement('h5');
-      scoreElement.innerText = `$`
+      scoreElement.setAttribute('class', 'high-score')
+      scoreElement.innerText = `${score.name} || ${score.score}pts`
+      highScoreElement.appendChild(scoreElement)
     });
+    return highScoreElement;
   }
 
 }
@@ -264,7 +267,7 @@ class Quiz {
 const timer1 = new Timer(300, timer);
 const quiz1 = new Quiz(questions);
 // build high scores table
-
+mainBox.appendChild(quiz1.buildHighScores());
 
 
 // Button Click event Listener
