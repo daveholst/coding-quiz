@@ -93,7 +93,7 @@ class Quiz {
     //clear main-box
     mainBox.innerHTML = '';
     // build and write heading
-    let resultsElement = document.createElement('h3');
+    let resultsElement = document.createElement('h2');
     resultsElement.innerText = 'Your Results';
     mainBox.appendChild(resultsElement);
     // build and write score
