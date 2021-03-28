@@ -17,3 +17,24 @@ body {
 .custom-button {
   display: block;
 }
+
+/* results page elements */
+h5 {
+  margin: 5px 0px;
+}
+
+.result-true {
+  display: inline-block;
+  margin: 5px 0px;
+  padding: 10px 0px;
+  width: 60vmin;
+  background-color: green;
+}
+
+.result-false {
+  display: inline-block;
+  margin: 5px 0px;
+  padding: 10px 0px;
+  width: 60vmin;
+  background-color: red;
+}

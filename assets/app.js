@@ -20,14 +20,13 @@ const questions = [
     correctIndex: 2
   }
 ]
-
-
 // class for timer object - takes time (sec) as argument
 class Timer {
   constructor(startValue,target) {
     this.startValue = startValue;
     this.currentVal = startValue;
     this.targetElement = target;
+    this.timerID;
   }
   // method - current Value to string (05:00)
   toString(timerVal = this.currentVal) {
@@ -37,13 +36,18 @@ class Timer {
   // method - startTimer & update element
   startTimer(interval = 1000) {
       this.targetElement.innerText = this.toString();
-    setInterval(() => {
+    this.timerID = setInterval(() => {
       this.currentVal -= 1;
       let stringTime = this.toString();
       this.targetElement.innerText = stringTime;
       // create event on end
 
     }, interval);
+  }
+
+  stopTimer() {
+    clearInterval(this.timerID)
+
   }
 
 }
@@ -61,12 +65,20 @@ class Quiz {
 
   get answersIndex() {
 
-    let answersArray = [];
+    let aIndex = [];
     this.questions.forEach(question => {
-    answersArray.push(question.correctIndex)
+    aIndex.push(question.correctIndex)
     });
-    return answersArray;
+    return aIndex;
   }
+
+  // get answersArray() {
+  //   let answersArray = [];
+  //   this.questions.forEach(question => {
+  //     answersArray.push(question.correctIndex)
+  //     });
+
+  // }
 
   generateQuestion(questionNum = this.currentQuestion) {
     const { userInputs } = this;
@@ -107,6 +119,10 @@ class Quiz {
             this.generateQuestion(this.currentQuestion);
           } else {
             //goto scores page? gen of method
+            timer1.stopTimer();
+            console.log('end');
+            this.resultsGenerator();
+            this.resultsPageGenerator();
           }
         });
       }
@@ -114,7 +130,6 @@ class Quiz {
 
   // is answer correct checker method
   isCorrect(questionIndex, inputIndex) {
-
     if (this.answersIndex[questionIndex] === inputIndex) {
       return true;
     } else {
@@ -133,11 +148,60 @@ class Quiz {
       } else {
         this.resultsList.push(false);
       }
-      return this.resultsList;
     }
+    return this.resultsList;
   }
   //write results to local storage
-  resultsWriter() {
+  resultsPageGenerator() {
+    //remove timer
+    timer.remove();
+    //clear main-box
+    mainBox.innerHTML = '';
+    // build and write heading
+    let resultsElement = document.createElement('h3');
+    resultsElement.innerText = 'Your Results';
+    mainBox.appendChild(resultsElement);
+    // build and write score
+    let scoreElement = document.createElement('h3');
+    scoreElement.innerText = `You acheived a score of ${this.totalScore} in ${timer1.toString()}`;
+    mainBox.appendChild(scoreElement);
+    // score saver
+    let scoreInput = document.createElement('input');
+    scoreInput.setAttribute('type', 'text');
+    scoreInput.setAttribute('id', 'score-input');
+    scoreInput.setAttribute('placeholder', 'name');
+    scoreInput.setAttribute('maxlength', '10');
+    mainBox.appendChild(scoreInput);
+    // save button
+    let saveButton = document.createElement('button');
+    saveButton.innerText = 'SAVE RESULT';
+    saveButton.setAttribute('id', 'save-button');
+    mainBox.appendChild(saveButton);
+    // TODO:saveButton.addEventListener('click', () => );
+    // reults tabe heading
+    let resultsHeading = document.createElement('h3');
+    resultsHeading.innerText = 'Results Breakdown';
+    // results table
+    for (let i = 0; i < this.resultsList.length; i++) {
+      const question = this.questions[i].question;
+      const answer = this.questions[i].answers[this.answersIndex[i]];
+      const resultHeading = document.createElement('h5')
+        resultHeading.innerText = question;
+        mainBox.appendChild(resultHeading);
+      const result = this.resultsList[i];
+      let resultElement = document.createElement('p')
+      resultElement.innerText = answer;
+      resultElement.setAttribute('class', result ? 'result-true' : 'result-false')
+      mainBox.appendChild(resultElement);
+    }
+    // add try again button
+    let tryAgainButton = document.createElement('button');
+    tryAgainButton.innerText = 'Try Again';
+    tryAgainButton.setAttribute('id', 'try-again-button');
+    mainBox.appendChild(tryAgainButton);
+
+  }
+  resultsSaver() {
 
   }
 
