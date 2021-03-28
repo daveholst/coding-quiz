@@ -10,20 +10,15 @@ class Quiz {
     this.totalScore = 0;
     this.userName = 'Anonymous';
   }
-
+  // generate answers Index from questions object
   get answersIndex() {
-
     let aIndex = [];
     this.questions.forEach(question => {
     aIndex.push(question.correctIndex)
     });
     return aIndex;
   }
-
-  get scoresRef() {
-    localStorage.getItem('scoresList')
-  }
-
+  // generate a new question page
   generateQuestion(questionNum = this.currentQuestion) {
     const { userInputs } = this;
     const { id, question, answers, correctIndex } = this.questions[questionNum];
@@ -44,32 +39,28 @@ class Quiz {
       mainBox.appendChild(newButton);
     }
     //add listeners on questions
-      for (let i = 0; i < answers.length; i++) {
-        const button = document.querySelector(`#button-${i}`);
-
-        button.addEventListener('click', (event) => {
-          let buttonIndex = parseInt(event.target.id.slice(-1));
-          console.log(buttonIndex);
-          userInputs.push(buttonIndex);
-          // check if incorrect
-          if (!this.isCorrect(id, buttonIndex)) {
-            timer1.currentVal -= 30;
-          }
-          console.log(this.isCorrect(id, buttonIndex));
-          //check if not last question
-          if (this.currentQuestion < this.lastQuestion) {
-            this.currentQuestion++;
-            mainBox.innerHTML = '';
-            this.generateQuestion(this.currentQuestion);
-          } else {
-            //goto scores page? gen of method
-            timer1.stopTimer();
-            console.log('end');
-            this.resultsGenerator();
-            this.resultsPageGenerator();
-          }
-        });
-      }
+    for (let i = 0; i < answers.length; i++) {
+      const button = document.querySelector(`#button-${i}`);
+      button.addEventListener('click', (event) => {
+        let buttonIndex = parseInt(event.target.id.slice(-1));
+        userInputs.push(buttonIndex);
+        // check if incorrect and take 30 seconds off
+        if (!this.isCorrect(id, buttonIndex)) {
+          timer1.currentVal -= 30;
+        }
+        //check if not last question
+        if (this.currentQuestion < this.lastQuestion) {
+          this.currentQuestion++;
+          mainBox.innerHTML = '';
+          this.generateQuestion(this.currentQuestion);
+        } else {
+          //goto scores page? gen of method
+          timer1.stopTimer();
+          this.resultsGenerator();
+          this.resultsPageGenerator();
+        }
+      });
+    }
   }
 
   // is answer correct checker method
@@ -81,7 +72,7 @@ class Quiz {
     }
   }
 
-  //results page generator -- returns results list (got correct? true/false)
+  //quiz results generator -- returns results list (got correct? true/false)
   resultsGenerator() {
     const userAnswers = this.userInputs;
     const correctAnswers = this.answersIndex;
@@ -116,10 +107,9 @@ class Quiz {
     scoreInput.setAttribute('placeholder', 'name');
     scoreInput.setAttribute('maxlength', '10');
     mainBox.appendChild(scoreInput);
-      //event listener to update obj
+      //event listener on input to update obj
     scoreInput.addEventListener('change', () => {
       this.userName = scoreInput.value;
-      console.log(this.userName);
     })
     // save button
     let saveButton = document.createElement('button');
@@ -150,6 +140,8 @@ class Quiz {
     tryAgainButton.innerText = 'Try Again';
     tryAgainButton.setAttribute('id', 'try-again-button');
     mainBox.appendChild(tryAgainButton);
+    // add event listener to try again
+    tryAgainButton.addEventListener('click', () => location.reload());
 
   }
   // write results to local storage
@@ -171,7 +163,6 @@ class Quiz {
     tempCopy.push(scoreObject);
       //stringify and send to local
     localStorage.setItem('scores-ids', (JSON.stringify(tempCopy)));
-    console.log(localStorage.getItem('scores-ids'));
   }
   // get sorted results in array from local storage
   resultsFromLocal() {

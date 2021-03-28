@@ -5,12 +5,15 @@ class Timer {
     this.targetElement = target;
     this.timerID;
   }
-  // method - current Value to string (05:00)
+  // current Value to string (05:00)
   toString(timerVal = this.currentVal) {
-    return new Date(timerVal * 1000).toISOString().substr(14, 5)
+    if (timerVal >= 0) {
+      return new Date(timerVal * 1000).toISOString().substr(14, 5)
+    } else {
+      return '00:00'
+    }
   }
-
-  // method - startTimer & update element
+  // startTimer & update element
   startTimer(interval = 1000) {
       this.targetElement.innerText = this.toString();
     this.timerID = setInterval(() => {
@@ -18,13 +21,15 @@ class Timer {
       let stringTime = this.toString();
       this.targetElement.innerText = stringTime;
       // create event on end
-
+      if (this.currentVal <= 0) {
+        this.stopTimer();
+        quiz1.resultsPageGenerator();
+      }
     }, interval);
   }
-
+  // pauseTimer
   stopTimer() {
     clearInterval(this.timerID)
-
   }
 
 }

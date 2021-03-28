@@ -1,11 +1,10 @@
-// Element Variables
+// Element Global Variables
 const timer = document.querySelector('#timer');
 const mainBox = document.querySelector('#main-box');
 const startButton = document.querySelector('#start-button')
 const answerButtons = document.querySelector('.custom-button')
 
-// shorthand WEBAPI
-
+// Questions Array
 const questions = [
   {
     id: 0,
@@ -22,13 +21,14 @@ const questions = [
 ]
 
 // declare timer and quiz objects.
-const timer1 = new Timer(300, timer);
+const timer1 = new Timer(600, timer);
 const quiz1 = new Quiz(questions);
 // build high scores table
 mainBox.appendChild(quiz1.buildHighScores());
 
-// Start Button Click event Listener
+// Start Button Click event Listener - clear elements, start timer and build first question
 startButton.addEventListener('click', () => {
+  mainBox.innerHTML = '';
   startButton.remove();
   timer1.startTimer();
   quiz1.generateQuestion();
