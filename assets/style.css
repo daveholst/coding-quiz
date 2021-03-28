@@ -1,5 +1,4 @@
 body {
-  /* TODO: Get better fonts!!! */
   font-family: "JetBrains Mono", monospace;
   text-align: center;
 }
@@ -51,6 +50,10 @@ button:hover {
 input {
   font-family: "JetBrains Mono", monospace;
   font-size: 1.5rem;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: solid 1px black;
+  border-left: 0px;
 }
 
 h5 {
@@ -74,14 +77,14 @@ h5 {
 }
 #save-button {
   display: block;
-  margin: 15px auto 40px auto;
+  margin: 25px auto 25px auto;
   width: 30vmin;
   height: 40px;
 }
 
 #try-again-button {
   display: block;
-  margin: 10px auto;
+  margin: 25px auto;
   width: 30vmin;
   height: 40px;
 }

@@ -104,7 +104,7 @@ class Quiz {
     let scoreInput = document.createElement('input');
     scoreInput.setAttribute('type', 'text');
     scoreInput.setAttribute('id', 'score-input');
-    scoreInput.setAttribute('placeholder', 'name');
+    scoreInput.setAttribute('placeholder', 'var name =');
     scoreInput.setAttribute('maxlength', '20');
     mainBox.appendChild(scoreInput);
       //event listener on input to update obj
@@ -125,7 +125,7 @@ class Quiz {
     // results table
     for (let i = 0; i < this.resultsList.length; i++) {
       const question = `Q${this.questions[i].id + 1}: ${this.questions[i].question}`;
-      const answer = this.questions[i].answers[this.answersIndex[i]];
+      const answer = this.questions[i].answers[this.userInputs[i]];
       const resultHeading = document.createElement('h5')
         resultHeading.innerText = question;
         mainBox.appendChild(resultHeading);
