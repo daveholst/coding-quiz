@@ -11,6 +11,10 @@ h2 {
   font-size: 2.25rem;
 }
 
+h5 {
+  margin: 10px auto;
+}
+
 button {
   font-family: "JetBrains Mono", monospace;
   font-weight: 600;
@@ -22,6 +26,7 @@ button:hover {
   background-color: darkgray;
 }
 
+/* front page */
 .high-score {
   font-family: "IBM Plex Mono", monospace;
   font-size: 1.5rem;
@@ -29,7 +34,7 @@ button:hover {
 }
 
 #main-box {
-  height: 55vmin;
+  height: 55vh;
   text-align: center;
 }
 

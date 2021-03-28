@@ -20,7 +20,7 @@ const questions = [
   },
   {
     id: 2,
-    question: 'The _______ method of an Array object adds elements to the end of an array',
+    question: 'The _______ method of an Array object adds elements to the end of an array.',
     answers: ['.pop()','.shift()','.push()','.unshift()'],
     correctIndex: 2
   },
