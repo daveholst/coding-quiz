@@ -55,6 +55,8 @@ class Quiz {
     this.userInputs = [];
     this.currentQuestion = 0;
     this.lastQuestion = questions.length - 1;
+    this.resultsList = [];
+    this.totalScore = 0;
   }
 
   get answersIndex() {
@@ -108,25 +110,6 @@ class Quiz {
           }
         });
       }
-
-
-  //   answerButtons.addEventListener('click', (event) => {
-  //     let buttonIndex = parseInt(event.target.id.slice(-1));
-  //     console.log(buttonIndex);
-  //     userInputs.push(buttonIndex);
-  //     // check if incorrect
-  //     if (!this.isCorrect(id, buttonIndex)) {
-  //       timer1.currentVal -= 30;
-  //     }
-  //     console.log(this.isCorrect(id, buttonIndex));
-  //     if (this.currentQuestion < this.lastQuestion) {
-  //       this.currentQuestion++;
-  //       mainBox.innerHTML = '';
-  //       this.generateQuestion(this.currentQuestion);
-  //     } else {
-  //       //goto scores page? gen of method
-  //     }
-  //   }, { once: true });
   }
 
   // is answer correct checker method
@@ -139,7 +122,24 @@ class Quiz {
     }
   }
 
+  //results page generator -- returns results list (got correct? true/false)
+  resultsGenerator() {
+    const userAnswers = this.userInputs;
+    const correctAnswers = this.answersIndex;
+    for (let i = 0; i < userAnswers.length; i++) {
+      if (userAnswers[i] === correctAnswers[i]) {
+        this.resultsList.push(true);
+        this.totalScore++;
+      } else {
+        this.resultsList.push(false);
+      }
+      return this.resultsList;
+    }
+  }
+  //write results to local storage
+  resultsWriter() {
 
+  }
 
 }
 
