@@ -2,6 +2,7 @@
 const timer = document.querySelector('#timer');
 const mainBox = document.querySelector('#main-box');
 const startButton = document.querySelector('#start-button')
+const answerButtons = document.querySelector('.custom-button')
 
 // shorthand WEBAPI
 
@@ -80,29 +81,52 @@ class Quiz {
       const answer = answers[i];
       let newButton = document.createElement('button');
       newButton.classList.add("custom-button");
-      newButton.setAttribute('id', `button ${i}`);
+      newButton.setAttribute('id', `button-${i}`);
       newButton.innerText = answer;
       mainBox.appendChild(newButton);
     }
+    //add listeners on first question
+      for (let i = 0; i < answers.length; i++) {
+        const button = document.querySelector(`#button-${i}`);
 
-    //add listener
-    mainBox.addEventListener('click', (event) => {
-      let buttonIndex = parseInt(event.target.id.slice(-1));
-      console.log(buttonIndex);
-      userInputs.push(buttonIndex);
-      // check if incorrect
-      if (!this.isCorrect(id, buttonIndex)) {
-        timer1.currentVal -= 30;
+        button.addEventListener('click', (event) => {
+          let buttonIndex = parseInt(event.target.id.slice(-1));
+          console.log(buttonIndex);
+          userInputs.push(buttonIndex);
+          // check if incorrect
+          if (!this.isCorrect(id, buttonIndex)) {
+            timer1.currentVal -= 30;
+          }
+          console.log(this.isCorrect(id, buttonIndex));
+          //check if not last question
+          if (this.currentQuestion < this.lastQuestion) {
+            this.currentQuestion++;
+            mainBox.innerHTML = '';
+            this.generateQuestion(this.currentQuestion);
+          } else {
+            //goto scores page? gen of method
+          }
+        });
       }
-      console.log(this.isCorrect(id, buttonIndex));
-      if (this.currentQuestion < this.lastQuestion) {
-        this.currentQuestion++;
-        mainBox.innerHTML = '';
-        this.generateQuestion(this.currentQuestion);
-      } else {
-        //goto scores page? gen of method
-      }
-    }, { once: true });
+
+
+  //   answerButtons.addEventListener('click', (event) => {
+  //     let buttonIndex = parseInt(event.target.id.slice(-1));
+  //     console.log(buttonIndex);
+  //     userInputs.push(buttonIndex);
+  //     // check if incorrect
+  //     if (!this.isCorrect(id, buttonIndex)) {
+  //       timer1.currentVal -= 30;
+  //     }
+  //     console.log(this.isCorrect(id, buttonIndex));
+  //     if (this.currentQuestion < this.lastQuestion) {
+  //       this.currentQuestion++;
+  //       mainBox.innerHTML = '';
+  //       this.generateQuestion(this.currentQuestion);
+  //     } else {
+  //       //goto scores page? gen of method
+  //     }
+  //   }, { once: true });
   }
 
   // is answer correct checker method
@@ -115,9 +139,6 @@ class Quiz {
     }
   }
 
-  generateResults() {
-
-  }
 
 
 }
