@@ -166,6 +166,10 @@ class Quiz {
   }
   // get sorted results in array from local storage
   resultsFromLocal() {
+    // if no local score-ids, create one
+    if (!localStorage.getItem('scores-ids')) {
+      localStorage.setItem('scores-ids', (JSON.stringify([])))
+    }
     function sortByScore(a, b) {
       const scoreA = a.score;
       const scoreB = b.score;
