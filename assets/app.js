@@ -52,6 +52,7 @@ class Timer {
 
 }
 
+// class for quiz - all related functions attached as methods.
 class Quiz {
   constructor(questions) {
     this.questions = questions;
@@ -61,6 +62,7 @@ class Quiz {
     this.lastQuestion = questions.length - 1;
     this.resultsList = [];
     this.totalScore = 0;
+    this.userName = 'Anonymous';
   }
 
   get answersIndex() {
@@ -72,13 +74,9 @@ class Quiz {
     return aIndex;
   }
 
-  // get answersArray() {
-  //   let answersArray = [];
-  //   this.questions.forEach(question => {
-  //     answersArray.push(question.correctIndex)
-  //     });
-
-  // }
+  get scoresRef() {
+    localStorage.getItem('scoresList')
+  }
 
   generateQuestion(questionNum = this.currentQuestion) {
     const { userInputs } = this;
@@ -163,27 +161,34 @@ class Quiz {
     mainBox.appendChild(resultsElement);
     // build and write score
     let scoreElement = document.createElement('h3');
-    scoreElement.innerText = `You acheived a score of ${this.totalScore} in ${timer1.toString()}`;
+    scoreElement.innerText = `You acheived a score of ${this.totalScore} with ${timer1.toString()} remaining.`;
     mainBox.appendChild(scoreElement);
-    // score saver
+    // score name saver
     let scoreInput = document.createElement('input');
     scoreInput.setAttribute('type', 'text');
     scoreInput.setAttribute('id', 'score-input');
     scoreInput.setAttribute('placeholder', 'name');
     scoreInput.setAttribute('maxlength', '10');
     mainBox.appendChild(scoreInput);
+      //event listener to update obj
+    scoreInput.addEventListener('change', () => {
+      this.userName = scoreInput.value;
+      console.log(this.userName);
+    })
     // save button
     let saveButton = document.createElement('button');
-    saveButton.innerText = 'SAVE RESULT';
+    saveButton.innerText = 'Save Result';
     saveButton.setAttribute('id', 'save-button');
     mainBox.appendChild(saveButton);
-    // TODO:saveButton.addEventListener('click', () => );
+    saveButton.addEventListener('click', () => {
+      this.resultsToLocal();
+    }, { once: true });
     // reults tabe heading
     let resultsHeading = document.createElement('h3');
     resultsHeading.innerText = 'Results Breakdown';
     // results table
     for (let i = 0; i < this.resultsList.length; i++) {
-      const question = this.questions[i].question;
+      const question = `Q${this.questions[i].id + 1}: ${this.questions[i].question}`;
       const answer = this.questions[i].answers[this.answersIndex[i]];
       const resultHeading = document.createElement('h5')
         resultHeading.innerText = question;
@@ -201,41 +206,72 @@ class Quiz {
     mainBox.appendChild(tryAgainButton);
 
   }
-  resultsSaver() {
+  // write results to local storage
+  resultsToLocal() {
+    // if no local score-ids, create one
+    if (!localStorage.getItem('scores-ids')) {
+      localStorage.setItem('scores-ids', (JSON.stringify([])))
+    }
+    // build object to save
+    const scoreObject = {
+      id: this.scoreID,
+      name: this.userName,
+      score: this.totalScore,
+    }
+    // save to local
+      //create temp copy
+    let tempCopy = JSON.parse(localStorage.getItem('scores-ids'));
+      //push in new score object
+    tempCopy.push(scoreObject);
+      //stringify and send to local
+    localStorage.setItem('scores-ids', (JSON.stringify(tempCopy)));
+    console.log(localStorage.getItem('scores-ids'));
+  }
+  // get sorted results in array from local storage
+  resultsFromLocal() {
+    function sortByScore(a, b) {
+      const scoreA = a.score;
+      const scoreB = b.score;
+      let comparison = 0;
+      if (scoreA < scoreB) {
+        comparison = 1;
+      } else if (scoreA > scoreB) {
+        comparison = -1;
+      }
+      return comparison;
+    }
+    const unsortedCopy = JSON.parse(localStorage.getItem('scores-ids'));
+    return unsortedCopy.sort(sortByScore);
+  }
 
+
+  //build high scores element
+  buildHighScores() {
+    const scores = this.resultsFromLocal();
+    let highScoreElement = document.createElement('div');
+    highScoreElement.setAttribute('id', 'high-scores');
+    scores.forEach(score => {;
+      let scoreElement = document.createElement('h5');
+      scoreElement.innerText = `$`
+    });
   }
 
 }
 
 
 
-
+// declare timer and quiz objects.
 const timer1 = new Timer(300, timer);
 const quiz1 = new Quiz(questions);
-
-function startQuiz() {
-  //create timer
-  // const timer1 = new Timer;
-  timer1.startTimer();
-  quiz1.generateQuestion();
-  // clear out highscore div
-
-  // remove start-button
-
-  // test generator
+// build high scores table
 
 
-}
-
-
-// TESTING
-// timer1.startTimer();
-// questionPageGenerator(questions[0]);
 
 // Button Click event Listener
 startButton.addEventListener('click', () => {
   startButton.remove();
-  startQuiz();
+  timer1.startTimer();
+  quiz1.generateQuestion();
 })
 
 //Mainbox event listener

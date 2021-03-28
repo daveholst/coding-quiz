@@ -6,6 +6,7 @@ body {
 
 #main-box {
   height: 70vmin;
+  text-align: center;
 }
 
 #start-button {
@@ -16,13 +17,15 @@ body {
 /* answer-buttons */
 .custom-button {
   display: block;
+  margin: 20px auto;
+  height: 50px;
+  min-width: 40vmax;
 }
 
 /* results page elements */
 h5 {
   margin: 5px 0px;
 }
-
 .result-true {
   display: inline-block;
   margin: 5px 0px;
@@ -37,4 +40,13 @@ h5 {
   padding: 10px 0px;
   width: 60vmin;
   background-color: red;
+}
+#save-button {
+  display: block;
+  margin: 10px auto;
+}
+
+#try-again-button {
+  display: block;
+  margin: 10px auto;
 }
