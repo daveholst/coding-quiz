@@ -105,7 +105,7 @@ class Quiz {
     scoreInput.setAttribute('type', 'text');
     scoreInput.setAttribute('id', 'score-input');
     scoreInput.setAttribute('placeholder', 'name');
-    scoreInput.setAttribute('maxlength', '10');
+    scoreInput.setAttribute('maxlength', '20');
     mainBox.appendChild(scoreInput);
       //event listener on input to update obj
     scoreInput.addEventListener('change', () => {
