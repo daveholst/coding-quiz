@@ -11,10 +11,6 @@ h2 {
   font-size: 2.25rem;
 }
 
-h5 {
-  margin: 10px auto;
-}
-
 button {
   font-family: "JetBrains Mono", monospace;
   font-weight: 600;
@@ -34,7 +30,7 @@ button:hover {
 }
 
 #main-box {
-  height: 55vh;
+  min-height: 55vh;
   text-align: center;
 }
 
@@ -62,7 +58,7 @@ input {
 }
 
 h5 {
-  margin: 5px 0px;
+  margin: 10px auto;
   font-size: 1rem;
 }
 .result-true {
@@ -84,7 +80,7 @@ h5 {
   display: block;
   margin: 25px auto 25px auto;
   width: 30vmin;
-  height: 40px;
+  min-height: 40px;
 }
 
 #try-again-button {
@@ -92,4 +88,5 @@ h5 {
   margin: 25px auto;
   width: 30vmin;
   height: 40px;
+  margin-bottom: 50px;
 }
