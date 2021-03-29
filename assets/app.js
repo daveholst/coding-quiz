@@ -39,7 +39,7 @@ const questions = [
 ]
 
 // declare timer and quiz objects.
-const timer1 = new Timer(600, timer);
+const timer1 = new Timer(300, timer);
 const quiz1 = new Quiz(questions);
 // build high scores table
 mainBox.appendChild(quiz1.buildHighScores());
