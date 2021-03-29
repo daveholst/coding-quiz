@@ -20,9 +20,9 @@ This week’s coursework will equip you with all the skills you need to succeed 
 
 ## User Story
 
-AS A coding boot camp student\
-I WANT to take a timed quiz on JavaScript fundamentals that stores high scores\
-SO THAT I can gauge my progress compared to my peers
+**AS A** coding boot camp student\
+**I WANT** to take a timed quiz on JavaScript fundamentals that stores high scores\
+**SO THAT** I can gauge my progress compared to my peers
 
 ## Acceptance Criteria
 
